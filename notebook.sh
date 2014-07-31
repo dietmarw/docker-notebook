@@ -13,4 +13,4 @@ fi
 HASH=$(python -c "from IPython.lib import passwd; print(passwd('${PASSWORD}'))")
 unset PASSWORD
 
-ipython notebook --no-browser --port 8888 --ip=* --certfile=$PEM_FILE --NotebookApp.password="$HASH"
+tmux new -s ipython-session "ipython notebook --no-browser --port 8888 --ip=* --certfile=$PEM_FILE --NotebookApp.password=$HASH"
