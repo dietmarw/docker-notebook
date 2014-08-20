@@ -21,14 +21,9 @@ RUN apt-get install -y -q build-essential make gcc zlib1g-dev git python python-
 RUN apt-get install -y -q libzmq3-dev sqlite3 libsqlite3-dev pandoc libcurl4-openssl-dev nodejs
 RUN apt-get install -y -q texlive-latex-extra texlive-fonts-recommended dvipng libfreetype6-dev
 
+RUN pip install ipython[notebook] matplotlib pandas
+
 # VOLUME /notebooks  # Don't use Volume as we do not need persistent data
-WORKDIR /notebooks
-
-# Clone the notebook files
-RUN git clone https://github.com/dietmarw/EK5312_ElectricalMachines .
-RUN chmod a-w /notebooks/Chapman/*
-
-RUN pip install ipython[notebook]
 
 EXPOSE 8888
 
@@ -36,7 +31,16 @@ EXPOSE 8888
 ENV PEM_FILE /key.pem
 ENV PASSWORD Dont make this your default
 
-ADD notebook.sh /
-RUN chmod u+x /notebook.sh
+# Create a directory for all the book related stuff
+RUN useradd student
+RUN mkdir /opt/notebooks
+RUN chown student /opt/notebooks
+ADD notebook.sh /opt/
+RUN chown student /opt/notebook.sh
+RUN chmod u+x /opt/notebook.sh
 
-CMD /notebook.sh
+USER student
+
+WORKDIR /opt/notebooks
+
+CMD /opt/notebook.sh
