@@ -20,7 +20,7 @@ RUN dpkg-reconfigure locales
 RUN apt-get install -y -q build-essential make gcc zlib1g-dev git python python-dev python-pip
 RUN apt-get install -y -q libzmq3-dev sqlite3 libsqlite3-dev pandoc libcurl4-openssl-dev nodejs
 RUN apt-get install -y -q texlive-latex-extra texlive-fonts-recommended dvipng libfreetype6-dev
-RUN apt-get install -y -q python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose
+RUN apt-get install -y -q python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose python-pygments
 
 # upgrade the slightly outdated ipython from the repo
 RUN pip install --upgrade ipython[notebook]

@@ -18,7 +18,7 @@ rm -rf /opt/notebooks/*
 # Clone the notebook files
 git clone https://github.com/dietmarw/EK5312_ElectricalMachines /opt/notebooks/EK5312
 # make notebook files read only
-chmod a-w /opt/notebooks/EK5312/Chapman/*
+chmod a-w /opt/notebooks/EK5312/Chapman/*.ipynb
 
 # Use this version for running the server secure via https
 # ipython notebook --no-browser --port 8888 --ip=* --certfile=$PEM_FILE --NotebookApp.password="$HASH"
