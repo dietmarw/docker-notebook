@@ -23,7 +23,7 @@ RUN apt-get install --no-install-recommends -y -q build-essential make gcc \
     texlive-latex-extra texlive-fonts-recommended dvipng libfreetype6-dev \
     python python-dev python-pip python-wand python-numpy python-scipy \
     python-matplotlib ipython ipython-notebook python-pandas python-sympy \
-    python-nose python-pygments
+    python-nose python-pygments python-tk
 
 # First upgrade the system ipython including dependencies
 RUN pip install --upgrade ipython[notebook]
