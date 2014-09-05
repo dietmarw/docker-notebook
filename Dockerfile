@@ -25,9 +25,12 @@ RUN apt-get install --no-install-recommends -y -q build-essential make gcc \
     python-matplotlib ipython ipython-notebook python-pandas python-sympy \
     python-nose python-pygments
 
+# First upgrade the system ipython including dependencies
+RUN pip install --upgrade ipython[notebook]
+
 # upgrade the newest ipython version 3-dev from the repo
 RUN mkdir /opt/ipython
-RUN git clone --recursive https://github.com/ipython/ipython.git /opt/ipython
+RUN git clone --depth 1 --recursive https://github.com/ipython/ipython.git /opt/ipython
 WORKDIR /opt/ipython
 RUN pip install --upgrade -e ".[notebook]"
 
