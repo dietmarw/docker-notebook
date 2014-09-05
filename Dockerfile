@@ -18,15 +18,18 @@ RUN dpkg-reconfigure locales
 
 # Python binary dependencies, developer tools
 RUN apt-get install --no-install-recommends -y -q build-essential make gcc \
-    zlib1g-dev git mencoder imagemagick\
+    zlib1g-dev git mencoder imagemagick inkscape\
     libzmq3-dev sqlite3 libsqlite3-dev pandoc libcurl4-openssl-dev nodejs \
     texlive-latex-extra texlive-fonts-recommended dvipng libfreetype6-dev \
     python python-dev python-pip python-wand python-numpy python-scipy \
     python-matplotlib ipython ipython-notebook python-pandas python-sympy \
     python-nose python-pygments
 
-# upgrade the slightly outdated ipython from the repo
-RUN pip install --upgrade ipython[notebook]
+# upgrade the newest ipython version 3-dev from the repo
+RUN mkdir /opt/ipython
+RUN git clone --recursive https://github.com/ipython/ipython.git /opt/ipython
+WORKDIR /opt/ipython
+RUN pip install --upgrade -e ".[notebook]"
 
 # VOLUME /notebooks  # Don't use Volume as we do not need persistent data
 
