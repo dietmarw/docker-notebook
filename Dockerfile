@@ -26,7 +26,7 @@ RUN apt-get install --no-install-recommends -y -q build-essential make gcc \
     python-nose python-pygments python-tk
 
 # First upgrade the system ipython including dependencies
-RUN pip install --upgrade ipython[notebook]
+RUN pip install --upgrade ipython[notebook] pandas
 
 # upgrade the newest ipython version 3-dev from the repo
 RUN mkdir /opt/ipython
