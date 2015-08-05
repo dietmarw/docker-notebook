@@ -1,8 +1,4 @@
 # Configuration parameters
-CULL_PERIOD ?= 30
-CULL_TIMEOUT ?= 60
-LOGGING ?= debug
-POOL_SIZE ?= 5
 TOKEN=`head -c 30 /dev/urandom | xxd -p`
 
 notebook-image: Dockerfile
@@ -25,16 +21,22 @@ notebook: notebook-image
 	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
 		--name=tmpnb \
 		-v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py \
-		--image=dietmarw/notebook # \
-		--command="ipython notebook --NotebookApp.base_url={base_path} --ip=0.0.0.0 --port {port}" \
-#		--cull_timeout=$(CULL_TIMEOUT) --cull_period=$(CULL_PERIOD) \
-#		--logging=$(LOGGING) --pool_size=$(POOL_SIZE)
+		--image=dietmarw/notebook
 
 minimal: minimal-image
 	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
 		--name=tmpnb \
 		-v /var/run/docker.sock:/docker.sock jupyter/tmpnb
 
+test: clean
+	docker pull dietmarw/notebook
+	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
+		--name=proxy jupyter/configurable-http-proxy \
+		--default-target http://127.0.0.1:9999
+	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
+	       --name=tmpnb \
+	       -v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py \
+	       --image=dietmarw/notebook
 
 dev: clean proxy notebook
 
