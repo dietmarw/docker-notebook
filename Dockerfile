@@ -17,7 +17,7 @@ USER root
 
 # Make sure apt is up to date
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get install -y git build-essential ca-certificates bzip2 libsm6
+RUN apt-get install -y git build-essential ca-certificates bzip2 libsm6 wamerican
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -51,20 +51,15 @@ RUN ipython profile create
 
 # Workaround for issue with ADD permissions
 USER root
-ADD profile_default /home/student/.ipython/profile_default
+COPY profile_default /home/student/.ipython/profile_default
 RUN chown student:student /home/student -R
+COPY ./setup.sh /usr/local/bin/
+#RUN chown $USER:$USER $HOME/setup.sh
+RUN chmod a+x /usr/local/bin/setup.sh
+
 USER student
 
 # Expose our custom setup to the installed ipython
 RUN cp /home/student/.ipython/profile_default/static/custom/* /opt/conda/lib/python3.4/site-packages/IPython/html/static/custom/
 
-RUN git clone --depth 1 https://github.com/dietmarw/tutorialtest /home/student/notebooks/EK5312
-
-# Convert notebooks to the current format
-RUN find . -name '*.ipynb' -exec ipython nbconvert --to notebook {} --output {} \;
-RUN find . -name '*.ipynb' -exec ipython trust {} \;
-
-# make notebook files read only
-RUN chmod a-w /home/student/notebooks/EK5312/Chapman/*.ipynb
-
-#CMD ipython notebook
+CMD ./setup.sh
