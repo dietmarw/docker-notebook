@@ -25,7 +25,7 @@ echo "* Welcome to the Git and GitHub tutorial *"
 echo "*    at the Modelica Conference 2015.    *"
 echo "******************************************"
 echo
-echo " Your temporary username is:            "
+echo " Your git username for this session is:"
 echo
 echo "            $username"
 echo
