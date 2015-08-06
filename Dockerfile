@@ -59,7 +59,7 @@ RUN conda install --yes ipython-notebook \
                         numpy \
                         pandas \
                         scipy \
-                        sympy
+                        sympy \
                         terminado && \
     conda clean -yt
 
