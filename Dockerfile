@@ -60,6 +60,6 @@ RUN chmod a+x /usr/local/bin/setup.sh
 USER student
 
 # Expose our custom setup to the installed ipython
-RUN cp /home/student/.ipython/profile_default/static/custom/* /opt/conda/lib/python3.4/site-packages/IPython/html/static/custom/
+#RUN cp /home/student/.ipython/profile_default/static/custom/* /opt/conda/lib/python3.4/site-packages/IPython/html/static/custom/
 
-CMD ./setup.sh
+CMD /usr/local/bin/setup.sh
