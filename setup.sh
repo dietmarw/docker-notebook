@@ -18,7 +18,7 @@ git config --global github.user 'modelica2015'
 
 git clone https://github.com/modelica2015/tutorial
 
-#cat  >> /etc/skel/.bashrc <<EOF
+cat  >> /home/student/.bashrc <<EOF
 echo
 echo "******************************************"
 echo "* Welcome to the Git and GitHub tutorial *"
@@ -29,6 +29,4 @@ echo " Your temporary username is:            "
 echo
 echo "            $username"
 echo
-#EOF
-
-# cd notebooks
+EOF

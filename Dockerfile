@@ -75,4 +75,6 @@ USER student
 # Expose our custom setup to the installed ipython
 #RUN cp /home/student/.ipython/profile_default/static/custom/* /opt/conda/lib/python3.4/site-packages/IPython/html/static/custom/
 
+# When run with orchestrate.py the following command will not be executed.
+# See '--command' option instead
 CMD /usr/local/bin/setup.sh
