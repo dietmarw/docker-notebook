@@ -15,5 +15,6 @@ docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$TOKEN \
        --image=dietmarw/notebook
 
 # This adds a reroute to port 80 (needs root privileges)
-iptables -t nat -I PREROUTING -p tcp -d 127.0.0.1 --dport 80 -j REDIRECT --to-ports 8000
+# the IP is for now set for the current droplet
+iptables -t nat -I PREROUTING -p tcp -d 188.226.207.162 --dport 80 -j REDIRECT --to-ports 8000
 iptables -t nat -I OUTPUT -p tcp -o lo --dport 80 -j REDIRECT --to-ports 8000
