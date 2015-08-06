@@ -21,6 +21,7 @@ RUN apt-get install -y build-essential \
         bzip2 \
         ca-certificates \
         git \
+        git-sh\
         libsm6 \
         libxext6 \
         libxrender1 \
@@ -69,8 +70,10 @@ USER root
 COPY profile_default /home/student/.ipython/profile_default
 RUN chown student:student /home/student -R
 COPY ./setup.sh /usr/local/bin/
-#RUN chown $USER:$USER $HOME/setup.sh
 RUN chmod a+x /usr/local/bin/setup.sh
+
+# set git-sh as default shell
+ENV SHELL /usr/bin/git-sh
 
 USER student
 
