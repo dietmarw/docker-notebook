@@ -37,12 +37,7 @@ RUN echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
     curl -O -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     /bin/bash /Miniconda3-latest-Linux-x86_64.sh -b -p $CONDA_DIR && \
     rm Miniconda3-latest-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda install --yes conda \
-                         matplotlib \
-                         numpy \
-                         pandas \
-                         scipy \
-                         sympy
+    $CONDA_DIR/bin/conda install --yes conda
 
 # We run our docker images with a non-root user as a security precaution.
 # student is our user
@@ -58,7 +53,14 @@ ENV USER student
 ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
 
-RUN conda install --yes ipython-notebook terminado && conda clean -yt
+RUN conda install --yes ipython-notebook \
+                        matplotlib \
+                        numpy \
+                        pandas \
+                        scipy \
+                        sympy
+                        terminado && \
+    conda clean -yt
 
 RUN ipython profile create
 
