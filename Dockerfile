@@ -22,6 +22,7 @@ RUN apt-get install -y build-essential \
         ca-certificates \
         git \
         libsm6 \
+        libxext6 \
         tig \
         wamerican
 
