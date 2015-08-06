@@ -17,7 +17,13 @@ USER root
 
 # Make sure apt is up to date
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get install -y git build-essential ca-certificates bzip2 libsm6 wamerican
+RUN apt-get install -y build-essential \
+        bzip2 \
+        ca-certificates \
+        git \
+        libsm6 \
+        tig \
+        wamerican
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -29,7 +35,12 @@ RUN echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
     curl -O -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
     /bin/bash /Miniconda3-latest-Linux-x86_64.sh -b -p $CONDA_DIR && \
     rm Miniconda3-latest-Linux-x86_64.sh && \
-    $CONDA_DIR/bin/conda install --yes conda
+    $CONDA_DIR/bin/conda install --yes conda \
+                         matplotlib \
+                         numpy \
+                         pandas \
+                         scipy \
+                         sympy
 
 # We run our docker images with a non-root user as a security precaution.
 # student is our user
