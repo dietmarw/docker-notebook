@@ -14,8 +14,8 @@ docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$TOKEN \
        -v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py \
        --image=dietmarw/notebook \
        --command="setup.sh && \
-                  ipython notebook --NotebookApp.base_url={base_path} --ip=0.0.0.0 --port {port}"
-
+                  ipython notebook --NotebookApp.base_url={base_path} --ip=0.0.0.0 --port {port}" \
+       --redirect_uri="terminals/1"
 
 # This adds a reroute to port 80 (needs root privileges)
 # the IP is for now set for the current droplet
