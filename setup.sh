@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# git clone --depth 1 https://github.com/dietmarw/tutorialtest /home/student/notebooks/EK5312
+git clone --depth 1 https://github.com/dietmarw/tutorialtest /home/student/notebooks/EK5312
 
 # # Convert notebooks to the current format
 # find . -name '*.ipynb' -exec ipython nbconvert --to notebook {} --output {} \;
