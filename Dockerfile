@@ -13,6 +13,7 @@ MAINTAINER Dietmar Winkler <dietmar.winkler@dwe.no>
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
+ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 # Make sure apt is up to date
@@ -23,8 +24,6 @@ RUN apt-get install -y build-essential \
         git \
         git-sh\
         libsm6 \
-        libxext6 \
-        libxrender1 \
         mc \
         tig \
         wamerican

@@ -1,7 +1,7 @@
 # Configuration parameters
 TOKEN=`head -c 30 /dev/urandom | xxd -p`
 
-notebook-image: Dockerfile
+notebook-image: Dockerfile setup.sh
 	docker build -t dietmarw/notebook .
 
 images: notebook-image
