@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git clone --depth 1 https://github.com/dietmarw/tutorialtest /home/student/notebooks/EK5312
+git clone --depth 1 https://github.com/dietmarw/tutorialtest
 
 # # Convert notebooks to the current format
 # find . -name '*.ipynb' -exec ipython nbconvert --to notebook {} --output {} \;
@@ -16,7 +16,7 @@ git config --global user.email "`echo $username`@example.org"
 git config --global credential.helper 'cache --timeout=36000'
 git config --global github.user 'modelica2015'
 
-git clone https://github.com/modelica2015/tutorial
+git clone https://github.com/modelica2015/tutorial modelica2015
 
 cat  >> /home/student/.bashrc <<EOF
 echo
