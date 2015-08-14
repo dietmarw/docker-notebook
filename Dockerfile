@@ -25,6 +25,7 @@ RUN apt-get install -y build-essential \
         libsm6 \
         libxext6 \
         libxrender1 \
+        mc \
         tig \
         wamerican
 
