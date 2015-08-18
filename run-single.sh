@@ -23,5 +23,5 @@ docker run --net=host -d --name notebook-single jupyter/notebook \
 
 # This adds a reroute to port 80 (needs root privileges)
 # the IP is for now set for the current droplet
-#iptables -t nat -I PREROUTING -p tcp -d 188.226.207.162 --dport 80 -j REDIRECT --to-ports 8000
-#iptables -t nat -I OUTPUT -p tcp -o lo --dport 80 -j REDIRECT --to-ports 8000
+iptables -t nat -I PREROUTING -p tcp -d 188.226.207.162 --dport 80 -j REDIRECT --to-ports 8888
+iptables -t nat -I OUTPUT -p tcp -o lo --dport 80 -j REDIRECT --to-ports 8000
