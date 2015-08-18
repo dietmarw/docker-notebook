@@ -1,57 +1,84 @@
-# Using the Ubuntu image
-FROM ubuntu:14.04
+# Base image of the IPython/Jupyter notebook, with conda
+# Intended to be used in a tmpnb installation
+# Based on https://github.com/jupyter/docker-demo-images
+
+# Use phusion/baseimage as base image. To make your builds reproducible, make
+# sure you lock down to a specific version, not to `latest`!
+# See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
+# a list of version numbers.
+FROM phusion/baseimage:0.9.17
 
 MAINTAINER Dietmar Winkler <dietmar.winkler@dwe.no>
 
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+
+ENV DEBIAN_FRONTEND noninteractive
+USER root
+
 # Make sure apt is up to date
-RUN apt-get update
-RUN apt-get upgrade -y
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+RUN apt-get install -y build-essential \
+        bzip2 \
+        ca-certificates \
+        git \
+        git-sh\
+        libsm6 \
+        mc \
+        tig
 
-# Not essential, but wise to set the lang
-RUN apt-get install -y language-pack-en
-ENV LANGUAGE en_GB.UTF-8
-ENV LANG en_GB.UTF-8
-ENV LC_ALL en_GB.UTF-8
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN locale-gen en_GB.UTF-8
-RUN dpkg-reconfigure locales
+ENV CONDA_DIR /opt/conda
 
-# Python binary dependencies, developer tools
-RUN apt-get install --no-install-recommends -y -q build-essential make gcc \
-    zlib1g-dev git mencoder imagemagick inkscape\
-    libzmq3-dev sqlite3 libsqlite3-dev pandoc libcurl4-openssl-dev nodejs \
-    texlive-latex-extra texlive-fonts-recommended dvipng libfreetype6-dev \
-    python python-dev python-pip python-wand python-numpy python-scipy \
-    python-matplotlib ipython ipython-notebook python-pandas python-sympy \
-    python-nose python-pygments python-tk
+# Install conda for the student user only (this is a single user container)
+RUN echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
+    curl -O -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    /bin/bash /Miniconda3-latest-Linux-x86_64.sh -b -p $CONDA_DIR && \
+    rm Miniconda3-latest-Linux-x86_64.sh && \
+    $CONDA_DIR/bin/conda install --yes conda
 
-# First upgrade the system ipython including dependencies
-RUN pip install --upgrade ipython[notebook]
-
-# upgrade the newest ipython version 3-dev from the repo
-RUN mkdir /opt/ipython
-RUN git clone --depth 1 --recursive https://github.com/ipython/ipython.git /opt/ipython
-WORKDIR /opt/ipython
-RUN pip install --upgrade -e ".[notebook]"
-
-# VOLUME /notebooks  # Don't use Volume as we do not need persistent data
+# We run our docker images with a non-root user as a security precaution.
+# student is our user
+RUN useradd -m -s /bin/bash student
+RUN chown -R student:student $CONDA_DIR
 
 EXPOSE 8888
 
-# You can mount your own SSL certs as necessary here
-ENV PEM_FILE /key.pem
-ENV PASSWORD Dont make this your default
+USER student
+ENV HOME /home/student
+ENV SHELL /bin/bash
+ENV USER student
+ENV PATH $CONDA_DIR/bin:$PATH
+WORKDIR $HOME
 
-# Create a directory for all the book related stuff
-RUN useradd student
-RUN mkdir /opt/notebooks
-RUN chown student /opt/notebooks
-ADD notebook.sh /opt/
-RUN chown student /opt/notebook.sh
-RUN chmod u+x /opt/notebook.sh
+RUN conda install --yes ipython-notebook \
+                        matplotlib \
+                        numpy \
+                        pandas \
+                        scipy \
+                        sympy \
+                        terminado && \
+    conda clean -yt
+
+RUN ipython profile create
+
+# Workaround for issue with ADD permissions
+USER root
+#COPY profile_default /home/student/.ipython/profile_default
+RUN chown student:student /home/student -R
+COPY ./setup.sh /usr/local/bin/
+RUN chmod a+x /usr/local/bin/setup.sh
+
+# set git-sh as default shell
+ENV SHELL /usr/bin/git-sh
 
 USER student
 
-WORKDIR /opt/notebooks
+# Expose our custom setup to the installed ipython
+#RUN cp /home/student/.ipython/profile_default/static/custom/* /opt/conda/lib/python3.4/site-packages/IPython/html/static/custom/
 
-CMD /opt/notebook.sh
+# When run with orchestrate.py the following command will not be executed.
+# See '--command' option instead
+CMD /usr/local/bin/setup.sh
