@@ -23,7 +23,6 @@ RUN apt-get install -y build-essential \
         ca-certificates \
         git \
         git-sh\
-        libsm6 \
         mc \
         tig \
         wamerican
@@ -54,7 +53,7 @@ ENV USER student
 ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
 
-RUN conda install --yes ipython-notebook \
+RUN conda install --yes jupyter \
                         matplotlib \
                         numpy \
                         pandas \
@@ -63,11 +62,14 @@ RUN conda install --yes ipython-notebook \
                         terminado && \
     conda clean -yt
 
-RUN ipython profile create
+#RUN jupyter notebook --generate-config
 
 # Workaround for issue with ADD permissions
 USER root
-COPY profile_default /home/student/.ipython/profile_default
+
+# Removed the following for now:
+#COPY profile_default /home/student/.jupyter/profile_default
+
 RUN chown student:student /home/student -R
 COPY ./setup.sh /usr/local/bin/
 RUN chmod a+x /usr/local/bin/setup.sh

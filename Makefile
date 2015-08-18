@@ -1,10 +1,8 @@
 # Configuration parameters
 TOKEN=`head -c 30 /dev/urandom | xxd -p`
 
-notebook-image: Dockerfile setup.sh
+image: Dockerfile setup.sh
 	docker build -t dietmarw/notebook .
-
-images: notebook-image
 
 proxy-image:
 	docker pull jupyter/configurable-http-proxy
@@ -13,12 +11,20 @@ proxy: proxy-image
 	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
 		--name=proxy jupyter/configurable-http-proxy \
 		--default-target http://127.0.0.1:9999
-
-notebook: notebook-image
+tmpnb: image
 	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
 		--name=tmpnb \
 		-v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py \
 		--image=dietmarw/notebook
+
+single: image
+	docker run --net=host -d -e PASSWORD=$(PASSWORD) --name single dietmarw/notebook
+
+server: single
+# This adds a reroute to port 80 (needs root privileges)
+# the IP is for now set for the current droplet
+	iptables -t nat -I PREROUTING -p tcp -d 188.226.207.162 --dport 80 -j REDIRECT --to-ports 8888
+	iptables -t nat -I OUTPUT -p tcp -o lo --dport 80 -j REDIRECT --to-ports 8888
 
 dev: clean proxy notebook
 
