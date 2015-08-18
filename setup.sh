@@ -36,4 +36,4 @@ unset PASSWORD
 
 cd notebooks
 
-jupyter notebook --no-browser --NotebookApp.password="${HASH}"
+jupyter notebook --no-browser --ip="*" --NotebookApp.password="${HASH}"
