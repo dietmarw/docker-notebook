@@ -62,14 +62,10 @@ RUN conda install --yes jupyter \
                         terminado && \
     conda clean -yt
 
-#RUN jupyter notebook --generate-config
+RUN pip install version_information
 
 # Workaround for issue with ADD permissions
 USER root
-
-# Removed the following for now:
-#COPY profile_default /home/student/.jupyter/profile_default
-
 RUN chown student:student /home/student -R
 COPY ./setup.sh /usr/local/bin/
 RUN chmod a+x /usr/local/bin/setup.sh
@@ -78,9 +74,6 @@ RUN chmod a+x /usr/local/bin/setup.sh
 ENV SHELL /usr/bin/git-sh
 
 USER student
-
-# Expose our custom setup to the installed ipython
-#RUN cp /home/student/.ipython/profile_default/static/custom/* /opt/conda/lib/python3.4/site-packages/IPython/html/static/custom/
 
 # When run with orchestrate.py the following command will not be executed.
 # See '--command' option instead
