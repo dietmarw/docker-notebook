@@ -40,7 +40,7 @@ clean:
 distclean: clean
 	-docker images -q --filter "dangling=true" | xargs docker rmi
 
-log single:
+log-single:
 	docker logs -f single
 
 log-tmpnb:
@@ -49,4 +49,4 @@ log-tmpnb:
 log-proxy:
 	docker logs -f proxy
 
-.PHONY: cleanup
+.PHONY: clean distclean restart stop
