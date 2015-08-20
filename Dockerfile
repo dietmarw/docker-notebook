@@ -18,12 +18,15 @@ USER root
 
 # Make sure apt is up to date
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get install -y build-essential \
-        bzip2 \
+RUN apt-get install -y  bzip2 \
         ca-certificates \
         git \
-        git-sh\
+        git-sh \
+        inkscape \
         mc \
+        pandoc \
+        texlive \
+        texlive-latex-extra \
         tig \
         wamerican
 
