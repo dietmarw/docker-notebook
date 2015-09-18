@@ -3,7 +3,7 @@ TOKEN=`head -c 30 /dev/urandom | xxd -p`
 
 docker rm  -f  `docker ps -aq`
 
-docker pull dietmarw/notebook
+#docker pull dietmarw/notebook
 
 docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$TOKEN \
        --name=proxy jupyter/configurable-http-proxy \
@@ -15,8 +15,8 @@ docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$TOKEN \
        --image=dietmarw/notebook \
        --command="setup.sh && \
                   ipython notebook --NotebookApp.base_url={base_path} --ip=0.0.0.0 --port {port}" \
-       --redirect_uri="terminals/1" \
-       --pool_size="2"
+       --redirect_uri="terminals/1"\
+       --pool_size="15"
 
 # This adds a reroute to port 80 (needs root privileges)
 # the IP is for now set for the current droplet
