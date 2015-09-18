@@ -16,7 +16,7 @@ git config --global user.email "`echo $username`@example.org"
 git config --global credential.helper 'cache --timeout=36000'
 git config --global github.user 'modelica2015'
 
-# git clone https://github.com/modelica2015/tutorial modelica2015
+git clone https://github.com/modelica2015/tutorial modelica2015
 
 cat  >> /home/student/.bashrc <<EOF
 echo
@@ -31,9 +31,9 @@ echo "            $username"
 echo
 EOF
 
-HASH=$(python -c "from notebook.auth import passwd; print(passwd('${PASSWORD}'))")
-unset PASSWORD
+#HASH=$(python -c "from notebook.auth import passwd; print(passwd('${PASSWORD}'))")
+#unset PASSWORD
 
-cd notebooks
+#cd notebooks
 
-jupyter notebook --no-browser --ip="*" --NotebookApp.password="${HASH}"
+#jupyter notebook --no-browser --ip="*" --NotebookApp.password="${HASH}"
