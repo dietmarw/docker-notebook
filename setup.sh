@@ -16,7 +16,9 @@ git config --global user.email "`echo $username`@example.org"
 git config --global credential.helper 'cache --timeout=36000'
 git config --global github.user 'modelica2015'
 
-git clone https://github.com/modelica2015/tutorial modelica2015
+git clone https://github.com/modelica2015/sandbox
+git clone https://github.com/modelica2015/ModelicaBook
+
 
 cat  >> /home/student/.bashrc <<EOF
 echo
