@@ -1,0 +1,7 @@
+#!/bin/bash
+
+export PASSWORD=hit
+cd /root/docker-notebook
+git pull
+make clean
+make server
