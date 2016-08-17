@@ -6,7 +6,7 @@
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM phusion/baseimage:0.9.17
+FROM phusion/baseimage:0.9.19
 
 MAINTAINER Dietmar Winkler <dietmar.winkler@dwe.no>
 
@@ -18,7 +18,8 @@ USER root
 
 # Make sure apt is up to date
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get install -y  bzip2 \
+RUN apt-get install -y --no-install-recommends \
+        bzip2 \
         ca-certificates \
         git \
         git-sh \
