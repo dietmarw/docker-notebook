@@ -23,13 +23,13 @@ RUN apt-get install -y --no-install-recommends \
         ca-certificates \
         git \
         git-sh \
-        inkscape \
+#        inkscape \
         mc \
         pandoc \
         texlive \
         texlive-latex-extra \
         tig \
-        wamerican
+#        wamerican
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
