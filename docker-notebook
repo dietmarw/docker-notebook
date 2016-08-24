@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PASSWORD=hit
+export PASSWORD=usn
 cd /root/docker-notebook
 git pull
 make clean

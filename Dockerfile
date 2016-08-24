@@ -18,7 +18,7 @@ USER root
 
 # Make sure apt is up to date
 RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -y \
         bzip2 \
         ca-certificates \
         git \
@@ -28,7 +28,7 @@ RUN apt-get install -y --no-install-recommends \
         pandoc \
         texlive \
         texlive-latex-extra \
-        tig \
+        tig #\
 #        wamerican
 
 # Clean up APT when done.
