@@ -17,10 +17,11 @@ ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 # Make sure apt is up to date
-RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 RUN apt-get install -y \
         bzip2 \
         ca-certificates \
+        ffmpeg \
         git \
         git-sh \
 #        inkscape \
