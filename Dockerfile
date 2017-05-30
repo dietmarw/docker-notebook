@@ -77,7 +77,7 @@ RUN chmod a+x /usr/local/bin/setup.sh
 RUN mkdir /etc/letsencrypt
 COPY fullchain.pem /etc/letsencrypt/
 COPY privkey.pem /etc/letsencrypt/
-RUN chmod o-x /etc/letsencrypt/
+RUN chmod o-r /etc/letsencrypt/*
 
 # set git-sh as default shell
 ENV SHELL /usr/bin/git-sh
