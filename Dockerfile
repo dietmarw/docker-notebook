@@ -75,8 +75,7 @@ RUN chown student:student /home/student -R
 COPY ./setup.sh /usr/local/bin/
 RUN chmod a+x /usr/local/bin/setup.sh
 RUN mkdir /home/student/letsencrypt
-ADD /etc/letsencrypt/live/jupyter.dwe.no/fullchain.pem /home/letsencrypt/
-ADD /etc/letsencrypt/live/jupyter.dwe.no/privkey.pem /home/letsencrypt/
+COPY /etc/letsencrypt/live/jupyter.dwe.no/*.pem /home/student/letsencrypt
 
 # set git-sh as default shell
 ENV SHELL /usr/bin/git-sh
