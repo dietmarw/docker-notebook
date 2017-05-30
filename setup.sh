@@ -37,5 +37,5 @@ unset PASSWORD
 cd notebooks
 
 jupyter notebook --no-browser --ip="*" --NotebookApp.password="${HASH}" \
-        --NotebookApp.certfile="/home/student/letsencrypt/fullchain.pem"\
-        --NotebookApp.keyfile="/home/student/letsencrypt/privkey.pem"\
+        --NotebookApp.certfile="/etc/letsencrypt/fullchain.pem"\
+        --NotebookApp.keyfile="/etc/letsencrypt/privkey.pem"\
