@@ -40,7 +40,7 @@ restart:
 
 clean:
 	-docker rm  -f  `docker ps -aq`
-	-rm *.pem
+	-rm -f *.pem
 
 distclean: clean
 	-docker images -q --filter "dangling=true" | xargs docker rmi
