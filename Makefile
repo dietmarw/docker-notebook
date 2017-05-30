@@ -1,7 +1,11 @@
 # Configuration parameters
 TOKEN=`head -c 30 /dev/urandom | xxd -p`
 
-image: Dockerfile setup.sh
+copycerts:
+	cp -L /etc/letsencrypt/live/jupyter.dwe.no/fullchain.pem .
+	cp -L /etc/letsencrypt/live/jupyter.dwe.no/privkey.pem .
+
+image: copycerts Dockerfile setup.sh
 	docker build -t dietmarw/notebook .
 
 proxy-image:
@@ -36,6 +40,7 @@ restart:
 
 clean:
 	-docker rm  -f  `docker ps -aq`
+	-rm *.pem
 
 distclean: clean
 	-docker images -q --filter "dangling=true" | xargs docker rmi
