@@ -27,8 +27,8 @@ single: image
 server: single
 # This adds a reroute to port 80 (needs root privileges)
 # the IP is for now set for the current droplet
-	sh -c "iptables -t nat -I PREROUTING -p tcp -d 128.39.88.61 --dport 80 -j REDIRECT --to-port 8888"
-	sh -c "iptables -t nat -I OUTPUT -p tcp -o lo --dport 80 -j REDIRECT --to-port 8888"
+	sh -c "iptables -t nat -I PREROUTING -p tcp -d 128.39.88.61 --dport 443 -j REDIRECT --to-port 8888"
+	sh -c "iptables -t nat -I OUTPUT -p tcp -o lo --dport 443 -j REDIRECT --to-port 8888"
 
 dev: clean proxy notebook
 
