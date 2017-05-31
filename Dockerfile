@@ -53,7 +53,9 @@ EXPOSE 8888
 
 USER student
 ENV HOME /home/student
-ENV SHELL /bin/bash
+# set git-sh as default shell
+ENV SHELL /usr/bin/git-sh
+#ENV SHELL /bin/bash
 ENV USER student
 ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
@@ -71,16 +73,14 @@ RUN pip install version_information
 
 # Workaround for issue with ADD permissions
 USER root
-RUN chown student:student /home/student -R
-COPY ./setup.sh /usr/local/bin/
-RUN chmod a+x /usr/local/bin/setup.sh
 RUN mkdir /etc/letsencrypt
 COPY fullchain.pem /etc/letsencrypt/
 COPY privkey.pem /etc/letsencrypt/
 # RUN chmod o-r /etc/letsencrypt/*
 
-# set git-sh as default shell
-ENV SHELL /usr/bin/git-sh
+RUN chown student:student /home/student -R
+COPY ./setup.sh /usr/local/bin/
+RUN chmod a+x /usr/local/bin/setup.sh
 
 USER student
 
