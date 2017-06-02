@@ -76,10 +76,10 @@ RUN conda install --yes jupyter \
                         terminado && \
     conda clean -yt
 RUN conda create -n py2 python=2 ipykernel &&\
-    activate py2 &&\
+    source activate py2 &&\
     ipython kernel install --user
 RUN conda create -n py3 python=3 ipykernel &&\
-    activate py3 &&\
+    source activate py3 &&\
     ipython kernel install --user
 RUN pip install version_information
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
