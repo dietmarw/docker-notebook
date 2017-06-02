@@ -80,14 +80,15 @@ RUN conda install --yes jupyter \
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
 RUN /bin/bash -c "source  activate py2 &&\
-    ipython kernel install --user"
-RUN pip install git+git://github.com/OpenModelica/OMPython.git
+    ipython kernel install --user &&\
+    pip install git+git://github.com/OpenModelica/OMPython.git &&\
+    pip install version_information"
 
 # Python 3 env
 RUN conda create -n py3 python=3 ipykernel
 RUN /bin/bash -c "source  activate py3 &&\
-    ipython kernel install --user"
-RUN pip install version_information
+    ipython kernel install --user &&\
+    pip install version_information"
 
 # Workaround for issue with ADD permissions
 USER root
