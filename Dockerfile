@@ -88,8 +88,7 @@ RUN conda create -n py3 python=3 ipykernel
 RUN /bin/bash -c "source  activate py3 &&\
     ipython kernel install --user"
 RUN pip install version_information
-RUN echo $PATH
-RUN conda env list
+
 # Workaround for issue with ADD permissions
 USER root
 
