@@ -64,7 +64,7 @@ ENV HOME /home/student
 ENV SHELL /usr/bin/git-sh
 #ENV SHELL /bin/bash
 ENV USER student
-ENV PATH $CONDA_DIR/bin:$PATH
+ENV PATH $CONDA_DIR/bin:$CONDA_DIR/envs/py2/bin:$CONDA_DIR/envs/py3/bin:$PATH
 WORKDIR $HOME
 
 RUN conda install --yes jupyter \
@@ -75,11 +75,11 @@ RUN conda install --yes jupyter \
                         sympy \
                         terminado && \
     conda clean -yt
-RUN conda create -n py2 python=2 ipykernel &&\
-    python source activate py2 &&\
+RUN conda create -n py2 python=2 ipykernel
+RUN source activate py2 &&\
     ipython kernel install --user
-RUN conda create -n py3 python=3 ipykernel &&\
-    python source activate py3 &&\
+RUN conda create -n py3 python=3 ipykernel
+RUN python source activate py3 &&\
     ipython kernel install --user
 RUN pip install version_information
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
