@@ -67,6 +67,7 @@ ENV USER student
 ENV PATH $CONDA_DIR/bin:$CONDA_DIR/envs/py2/bin:$CONDA_DIR/envs/py3/bin:$PATH
 WORKDIR $HOME
 
+# General conda installation
 RUN conda install --yes jupyter \
                         matplotlib \
                         numpy \
@@ -75,17 +76,24 @@ RUN conda install --yes jupyter \
                         sympy \
                         terminado && \
     conda clean -yt
+
+# Python 2 env
 RUN conda create -n py2 python=2 ipykernel
-RUN source activate py2 &&\
-    ipython kernel install --user
-RUN conda create -n py3 python=3 ipykernel
-RUN python source activate py3 &&\
-    ipython kernel install --user
-RUN pip install version_information
+#RUN source activate py2 &&\
+#    ipython kernel install --user
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
 
+# Python 3 env
+RUN conda create -n py3 python=3 ipykernel
+#RUN python source activate py3 &&\
+#    ipython kernel install --user
+RUN pip install version_information
+RUN echo $PATH
+RUN conda env list
 # Workaround for issue with ADD permissions
 USER root
+
+# Let's encrypt setup
 RUN mkdir /etc/letsencrypt
 COPY fullchain.pem /etc/letsencrypt/
 COPY privkey.pem /etc/letsencrypt/
