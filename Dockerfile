@@ -18,7 +18,7 @@ USER root
 
 # Make sure apt is up to date
 RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial stable'
-RUN curl -O -s http://build.openmodelica.org/apt/openmodelica.asc -O- | apt-key add -
+RUN curl -s http://build.openmodelica.org/apt/openmodelica.asc | apt-key add -
 RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 
 # Install OpenModelica components
