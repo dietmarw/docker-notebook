@@ -17,10 +17,10 @@ ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 # Make sure apt is up to date
+RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial stable'
 RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 
 # Install OpenModelica components
-RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial stable'
 RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
 
 # Install rest of base system
