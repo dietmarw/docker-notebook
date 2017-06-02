@@ -64,7 +64,7 @@ ENV HOME /home/student
 ENV SHELL /usr/bin/git-sh
 #ENV SHELL /bin/bash
 ENV USER student
-ENV PATH $CONDA_DIR/bin:$CONDA_DIR/envs/py2/bin:$CONDA_DIR/envs/py3/bin:$PATH
+ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
 
 # General conda installation
@@ -79,14 +79,14 @@ RUN conda install --yes jupyter \
 
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
-#RUN source activate py2 &&\
-#    ipython kernel install --user
+RUN /bin/bash -c "source  activate py2 &&\
+    ipython kernel install --user"
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
 
 # Python 3 env
 RUN conda create -n py3 python=3 ipykernel
-#RUN python source activate py3 &&\
-#    ipython kernel install --user
+RUN /bin/bash -c "source  activate py3 &&\
+    ipython kernel install --user"
 RUN pip install version_information
 RUN echo $PATH
 RUN conda env list
