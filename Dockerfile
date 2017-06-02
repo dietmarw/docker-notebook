@@ -75,12 +75,12 @@ RUN conda install --yes jupyter \
                         sympy \
                         terminado && \
     conda clean -yt
-RUN conda create -n py2 python=2 ipykernel
-RUN source activate py2
-RUN ipython kernel install --user
-RUN conda create -n py3 python=3 ipykernel
-RUN source activate py3
-RUN ipython kernel install --user
+RUN conda create -n py2 python=2 ipykernel &&\
+    source activate py2 &&\
+    ipython kernel install --user
+RUN conda create -n py3 python=3 ipykernel &&\
+    source activate py3 &&\
+    ipython kernel install --user
 RUN pip install version_information
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
 
