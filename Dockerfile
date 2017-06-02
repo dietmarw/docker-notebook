@@ -68,14 +68,14 @@ ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
 
 # General conda installation
-# RUN conda install --yes jupyter \
-#                         matplotlib \
-#                         numpy \
-#                         pandas \
-#                         scipy \
-#                         sympy \
-#                         terminado && \
-#     conda clean -yt
+RUN conda install --yes jupyter \
+                        matplotlib \
+                        numpy \
+                        pandas \
+                        scipy \
+                        sympy \
+                        terminado && \
+    conda clean -yt
 
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
