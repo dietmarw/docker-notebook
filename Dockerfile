@@ -18,6 +18,12 @@ USER root
 
 # Make sure apt is up to date
 RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+
+# Install OpenModelica components
+RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial stable'
+RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
+
+# Install rest of base system
 RUN apt-get install -y \
         bzip2 \
         ca-certificates \
@@ -68,8 +74,10 @@ RUN conda install --yes jupyter \
                         sympy \
                         terminado && \
     conda clean -yt
-
+RUN conda create -n py2 python=2 ipykernel
+RUN conda create -n py3 python=3 ipykernel
 RUN pip install version_information
+RUN pip install git+git://github.com/OpenModelica/OMPython.git
 
 # Workaround for issue with ADD permissions
 USER root

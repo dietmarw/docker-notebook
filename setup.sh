@@ -5,7 +5,7 @@ git clone --depth 1 https://github.com/dietmarw/EK5312_ElectricalMachines notebo
 # Convert notebooks to the current format
 # find . -name '*.ipynb' -exec jupyter nbconvert --to notebook {} --output {} \;
 # Sign notebooks:
-find . -name '*.ipynb' -exec jupyter trust {} \;
+#find . -name '*.ipynb' -exec jupyter trust {} \;
 
 # make notebook files read only
 #chmod a-w /home/student/notebooks/EK5312/Chapman/*.ipynb
