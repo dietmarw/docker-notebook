@@ -69,49 +69,49 @@ WORKDIR $HOME
 
 # General conda installation
 RUN conda install --yes jupyter \
-                         matplotlib \
-                         numpy \
-                         pandas \
-                         scipy \
-                         sympy \
+                         # matplotlib \
+                         # numpy \
+                         # pandas \
+                         # scipy \
+                         # sympy \
                          terminado
-RUN conda -c mutirri omniorb ompython
-RUN conda clean -yt
-RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
+# RUN conda -c mutirri omniorb ompython # will not yet work, wait for version 4.2.2
+# RUN conda clean -yt
+# RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
 
 
 
-# # Python 2 env
-# RUN conda create -n py2 python=2 ipykernel
-# RUN /bin/bash -c "source  activate py2 &&\
-#     ipython kernel install --user &&\
-# #    pip install git+git://github.com/OpenModelica/OMPython.git &&\
-#     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
-#     pip install version_information &&\
-#     conda install --yes jupyter \
-#                         matplotlib \
-#                         ompython \
-#                         omniorb
-#                         numpy \
-#                         pandas \
-#                         scipy \
-#                         sympy \
-#                         terminado && \
-#     conda clean -yt"
+# Python 2 env
+RUN conda create -n py2 python=2 ipykernel
+RUN /bin/bash -c "export PYTHONNOUSERSITE=0 && source  activate py2 &&\
+    ipython kernel install --user &&\
+    pip install git+git://github.com/OpenModelica/OMPython.git &&\
+    pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
+    pip install version_information &&\
+    conda install --yes jupyter \
+                        matplotlib \
+                        ompython \
+                        omniorb
+                        numpy \
+                        pandas \
+                        scipy \
+                        sympy \
+                        terminado && \
+    conda clean -yt"
 
-# # Python 3 env
-# RUN conda create -n py3 python=3 ipykernel
-# RUN /bin/bash -c "source  activate py3 &&\
-#     ipython kernel install --user &&\
-#     pip install version_information &&\
-#     conda install --yes jupyter \
-#                         matplotlib \
-#                         numpy \
-#                         pandas \
-#                         scipy \
-#                         sympy \
-#                         terminado && \
-#     conda clean -yt"
+# Python 3 env
+RUN conda create -n py3 python=3 ipykernel
+RUN /bin/bash -c "source  activate py3 &&\
+    ipython kernel install --user &&\
+    pip install version_information &&\
+    conda install --yes jupyter \
+                        matplotlib \
+                        numpy \
+                        pandas \
+                        scipy \
+                        sympy \
+                        terminado && \
+    conda clean -yt"
 
 # Workaround for issue with ADD permissions
 USER root
