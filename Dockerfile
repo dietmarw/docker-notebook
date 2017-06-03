@@ -74,10 +74,9 @@ RUN conda install --yes jupyter \
                          pandas \
                          scipy \
                          sympy \
-                         terminado  \
-                         -c mutirri omniorb \
-                         -c mutirri ompython &&\
-conda clean -yt
+                         terminado
+RUN conda -c mutirri omniorbi ompython
+RUN conda clean -yt
 RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
 
 
