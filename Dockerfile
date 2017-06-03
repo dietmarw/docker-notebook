@@ -22,7 +22,7 @@ RUN curl -s http://build.openmodelica.org/apt/openmodelica.asc | apt-key add -
 RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 
 # Install OpenModelica components
-RUN apt-get install -y omc omlib-modelica-3.2.2 # omniorb python-omniorb omniidl omniidl-python
+RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
 
 # Install rest of base system
 RUN apt-get install -y \
