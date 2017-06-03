@@ -83,15 +83,13 @@ RUN conda install --yes jupyter \
 
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
-RUN /bin/bash -c "export PYTHONNOUSERSITE=0 && source  activate py2 &&\
+RUN /bin/bash -c "export PYTHONNOUSERSITE=0 && source activate py2 &&\
     ipython kernel install --user &&\
     pip install git+git://github.com/OpenModelica/OMPython.git &&\
     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
     pip install version_information &&\
     conda install --yes jupyter \
                         matplotlib \
-                        ompython \
-                        omniorb
                         numpy \
                         pandas \
                         scipy \
