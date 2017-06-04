@@ -83,7 +83,7 @@ RUN conda install --yes jupyter \
 
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
-RUN /bin/bash -c "export PYTHONNOUSERSITE=1 && source activate py2 &&\
+RUN /bin/bash -c "source activate py2 &&\
     ipython kernel install --user &&\
     pip install git+git://github.com/OpenModelica/OMPython.git &&\
     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
@@ -95,7 +95,8 @@ RUN /bin/bash -c "export PYTHONNOUSERSITE=1 && source activate py2 &&\
                         scipy \
                         sympy \
                         terminado && \
-    conda clean -yt &&\\
+    conda clean -yt"
+RUN /bin/bash -c "source activate py2 &&\
     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
     echo 'export PYTHONUSERSITE=1' >> $CONDA_DIR/envs/py2/etc/activate.d/globalsitepackage.sh"
 
