@@ -95,7 +95,9 @@ RUN /bin/bash -c "export PYTHONNOUSERSITE=1 && source activate py2 &&\
                         scipy \
                         sympy \
                         terminado && \
-    conda clean -yt"
+    conda clean -yt &&\\
+    mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
+    echo 'export PYTHONUSERSITE=1' >> $CONDA_DIR/envs/py2/etc/activate.d/globalsitepackage.sh"
 
 # Python 3 env
 RUN conda create -n py3 python=3 ipykernel
