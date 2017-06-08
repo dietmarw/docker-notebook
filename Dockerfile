@@ -35,7 +35,8 @@ RUN apt-get install -y \
         mc \
         pandoc \
         texlive \
-        texlive-latex-extra \
+        texlive-latex-extra\
+        texlive-xetex\
         tig #\
 #        wamerican
 
@@ -110,8 +111,7 @@ RUN /bin/bash -c "source  activate py3 &&\
                         numpy \
                         pandas \
                         scipy \
-                        sympy \
-                        terminado && \
+                        sympy && \
     conda clean -yt"
 
 # Workaround for issue with ADD permissions
