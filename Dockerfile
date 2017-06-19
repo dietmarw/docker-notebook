@@ -69,51 +69,49 @@ ENV USER student
 ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
 
-# # General conda installation
-# RUN conda install --yes jupyter \
-#                          matplotlib \
-#                          numpy \
-#                          pandas \
-#                          scipy \
-#                          sympy \
-#                          terminado
-# RUN pip install git+git://github.com/OpenModelica/OMPython.git
-# RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
+# General conda installation
+RUN conda install --yes jupyter \
+                         matplotlib \
+                         numpy \
+                         pandas \
+                         scipy \
+                         sympy \
+                         terminado
+RUN pip install git+git://github.com/OpenModelica/OMPython.git
+RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
+RUN conda clean -yt
 
-# RUN conda -c mutirri omniorb ompython # will not yet work, wait for version 4.2.2
-# RUN conda clean -yt
-
-# Python 2 env
-RUN conda create -n py2 python=2 ipykernel
-RUN /bin/bash -c "source activate py2 &&\
-    ipython kernel install --user &&\
-    pip install git+git://github.com/OpenModelica/OMPython.git &&\
-    pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
-    pip install version_information &&\
-    conda install --yes jupyter \
-                        matplotlib \
-                        numpy \
-                        pandas \
-                        scipy \
-                        sympy \
-                        terminado"
-#     conda clean -yt"
+# # Python 2 env
+# RUN conda create -n py2 python=2 ipykernel
 # RUN /bin/bash -c "source activate py2 &&\
-#     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
-#     echo 'export PYTHONUSERSITE=1' >> $CONDA_DIR/envs/py2/etc/activate.d/globalsitepackage.sh"
+#     ipython kernel install --user &&\
+#     pip install git+git://github.com/OpenModelica/OMPython.git &&\
+#     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
+#     pip install version_information &&\
+#     conda install --yes jupyter \
+#                         matplotlib \
+#                         numpy \
+#                         pandas \
+#                         scipy \
+#                         sympy \
+#                         terminado"
+# #     conda clean -yt"
+# # RUN /bin/bash -c "source activate py2 &&\
+# #     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
+# #     echo 'export PYTHONUSERSITE=1' >> $CONDA_DIR/envs/py2/etc/activate.d/globalsitepackage.sh"
 
-# Python 3 env
-RUN conda create -n py3 python=3 ipykernel
-RUN /bin/bash -c "source activate py3 &&\
-    ipython kernel install --user &&\
-    pip install version_information &&\
-    conda install --yes jupyter \
-                        matplotlib \
-                        numpy \
-                        pandas \
-                        scipy \
-                        sympy && \
-    conda clean -yt"
+# # Python 3 env
+# RUN conda create -n py3 python=3 ipykernel
+# RUN /bin/bash -c "source activate py3 &&\
+#     ipython kernel install --user &&\
+#     pip install version_information &&\
+#     conda install --yes jupyter \
+#                         matplotlib \
+#                         numpy \
+#                         pandas \
+#                         scipy \
+#                         sympy && \
+#     conda clean -yt"
 
 # Workaround for issue with ADD permissions
 USER root

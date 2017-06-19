@@ -36,7 +36,6 @@ HASH=$(python -c "from notebook.auth import passwd; print(passwd('${PASSWORD}'))
 unset PASSWORD
 
 cd notebooks
-source activate py3
 jupyter notebook --no-browser --ip="*" --NotebookApp.password="${HASH}" \
         --NotebookApp.certfile="/etc/letsencrypt/fullchain.pem"\
         --NotebookApp.keyfile="/etc/letsencrypt/privkey.pem"\
