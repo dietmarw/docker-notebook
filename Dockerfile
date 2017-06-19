@@ -72,7 +72,6 @@ WORKDIR $HOME
 # General conda installation
 RUN conda install --yes jupyter \
                          matplotlib \
-                         mpld3 \
                          numpy \
                          pandas \
                          scipy \
@@ -80,7 +79,7 @@ RUN conda install --yes jupyter \
                          terminado
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
 RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
-RUN pip install version_information
+RUN pip install version_information mpld3
 RUN conda clean -yt
 
 # # Python 2 env
