@@ -86,7 +86,7 @@ WORKDIR $HOME
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
 RUN /bin/bash -c "source activate py2 &&\
-    ipython kernel install --user &&\
+    ipython kernel install --userdwe.no &&\
     pip install git+git://github.com/OpenModelica/OMPython.git &&\
     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
     pip install version_information &&\
@@ -96,7 +96,7 @@ RUN /bin/bash -c "source activate py2 &&\
                         pandas \
                         scipy \
                         sympy \
-                        terminado " # && \
+                        terminado  && "# \
 #     conda clean -yt"
 # RUN /bin/bash -c "source activate py2 &&\
 #     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
