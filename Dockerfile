@@ -96,7 +96,7 @@ RUN /bin/bash -c "source activate py2 &&\
                         pandas \
                         scipy \
                         sympy \
-                        terminado  && "# \
+                        terminado"
 #     conda clean -yt"
 # RUN /bin/bash -c "source activate py2 &&\
 #     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
