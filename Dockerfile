@@ -72,6 +72,7 @@ WORKDIR $HOME
 # General conda installation
 RUN conda install --yes jupyter \
                          matplotlib \
+                         mpld3 \
                          numpy \
                          pandas \
                          scipy \
