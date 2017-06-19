@@ -86,7 +86,7 @@ WORKDIR $HOME
 # Python 2 env
 RUN conda create -n py2 python=2 ipykernel
 RUN /bin/bash -c "source activate py2 &&\
-    ipython kernel install --userdwe.no &&\
+    ipython kernel install --user &&\
     pip install git+git://github.com/OpenModelica/OMPython.git &&\
     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
     pip install version_information &&\
