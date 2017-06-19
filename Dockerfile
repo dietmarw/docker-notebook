@@ -17,12 +17,13 @@ ENV DEBIAN_FRONTEND noninteractive
 USER root
 
 # Make sure apt is up to date
-RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial stable'
+RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial nightly'
 RUN curl -s http://build.openmodelica.org/apt/openmodelica.asc | apt-key add -
 RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 
 # Install OpenModelica components
-RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
+#RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
+RUN apt-get install -y omc omlib-modelica-3.2.2
 
 # Install rest of base system
 RUN apt-get install -y \
@@ -47,9 +48,9 @@ ENV CONDA_DIR /opt/conda
 
 # Install conda for the student user only (this is a single user container)
 RUN echo 'export PATH=$CONDA_DIR/bin:$PATH' > /etc/profile.d/conda.sh && \
-    curl -O -s https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh && \
-    /bin/bash /Miniconda2-latest-Linux-x86_64.sh -b -p $CONDA_DIR && \
-    rm Miniconda2-latest-Linux-x86_64.sh && \
+    curl -O -s https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    /bin/bash /Miniconda3-latest-Linux-x86_64.sh -b -p $CONDA_DIR && \
+    rm Miniconda3-latest-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda install --yes conda
 
 # We run our docker images with a non-root user as a security precaution.
@@ -68,34 +69,34 @@ ENV USER student
 ENV PATH $CONDA_DIR/bin:$PATH
 WORKDIR $HOME
 
-# General conda installation
-RUN conda install --yes jupyter \
-                         matplotlib \
-                         numpy \
-                         pandas \
-                         scipy \
-                         sympy \
-                         terminado
-RUN pip install git+git://github.com/OpenModelica/OMPython.git
-RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
+# # General conda installation
+# RUN conda install --yes jupyter \
+#                          matplotlib \
+#                          numpy \
+#                          pandas \
+#                          scipy \
+#                          sympy \
+#                          terminado
+# RUN pip install git+git://github.com/OpenModelica/OMPython.git
+# RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
 
 # RUN conda -c mutirri omniorb ompython # will not yet work, wait for version 4.2.2
 # RUN conda clean -yt
 
-# # Python 2 env
-# RUN conda create -n py2 python=2 ipykernel
-# RUN /bin/bash -c "source activate py2 &&\
-#     ipython kernel install --user &&\
-#     pip install git+git://github.com/OpenModelica/OMPython.git &&\
-#     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
-#     pip install version_information &&\
-#     conda install --yes jupyter \
-#                         matplotlib \
-#                         numpy \
-#                         pandas \
-#                         scipy \
-#                         sympy \
-#                         terminado && \
+# Python 2 env
+RUN conda create -n py2 python=2 ipykernel
+RUN /bin/bash -c "source activate py2 &&\
+    ipython kernel install --user &&\
+    pip install git+git://github.com/OpenModelica/OMPython.git &&\
+    pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
+    pip install version_information &&\
+    conda install --yes jupyter \
+                        matplotlib \
+                        numpy \
+                        pandas \
+                        scipy \
+                        sympy \
+                        terminado " # && \
 #     conda clean -yt"
 # RUN /bin/bash -c "source activate py2 &&\
 #     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
@@ -103,7 +104,7 @@ RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
 
 # Python 3 env
 RUN conda create -n py3 python=3 ipykernel
-RUN /bin/bash -c "source  activate py3 &&\
+RUN /bin/bash -c "source activate py3 &&\
     ipython kernel install --user &&\
     pip install version_information &&\
     conda install --yes jupyter \
