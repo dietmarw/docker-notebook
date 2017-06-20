@@ -77,6 +77,8 @@ RUN conda install --yes jupyter \
                          scipy \
                          sympy \
                          terminado
+# First invoke the CACHEBUST so it can be used
+RUN echo "HELLO CACHE $CACHEBUST"
 ARG CACHEBUST=1
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
 ARG CACHEBUST=1
