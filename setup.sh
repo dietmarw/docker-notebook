@@ -1,6 +1,7 @@
 #!/bin/bash
 
 git clone --depth 1 https://github.com/dietmarw/EK5312_ElectricalMachines notebooks/EK5312
+git clone --depth 1 https://github.com/dietmarw/FM1015 notebooks/FM1015
 
 # Convert notebooks to the current format
 # find . -name '*.ipynb' -exec jupyter nbconvert --to notebook {} --output {} \;
