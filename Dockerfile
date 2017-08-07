@@ -83,6 +83,7 @@ ARG CACHEBUST=1
 RUN pip install git+git://github.com/OpenModelica/OMPython.git
 ARG CACHEBUST=1
 RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
+RUN pip install version_information
 RUN conda clean -yt
 
 # # Python 2 env
