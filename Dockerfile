@@ -80,9 +80,9 @@ RUN conda install --yes jupyter \
 # First invoke the CACHEBUST so it can be used
 RUN echo "HELLO CACHE $CACHEBUST"
 ARG CACHEBUST=1
-RUN pip install git+git://github.com/OpenModelica/OMPython.git
+RUN pip install -U git+git://github.com/OpenModelica/OMPython.git
 ARG CACHEBUST=1
-RUN pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git
+RUN pip install -U git+git://github.com/OpenModelica/jupyter-openmodelica.git
 RUN pip install version_information
 RUN conda clean -yt
 
