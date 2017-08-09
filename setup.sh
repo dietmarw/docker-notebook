@@ -9,7 +9,8 @@ git clone --depth 1 https://github.com/dietmarw/FM1015 notebooks/FM1015
 #find . -name '*.ipynb' -exec jupyter trust {} \;
 
 # make notebook files read only
-#chmod a-w /home/student/notebooks/EK5312/Chapman/*.ipynb
+chmod a-w /home/student/notebooks/EK5312/Chapman/*.ipynb
+chmod a-w /home/student/notebooks/FM1015/*.ipynb
 
 # username=`shuf -n 1 /usr/share/dict/american-english | sed -e "s/'.*//"`
 
