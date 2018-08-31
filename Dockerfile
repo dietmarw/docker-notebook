@@ -29,6 +29,7 @@ RUN apt-get install -y omc omlib-modelica-3.2.2
 RUN apt-get install -y \
         bzip2 \
         ca-certificates \
+        dvipng \
         ffmpeg \
         git \
         git-sh \
