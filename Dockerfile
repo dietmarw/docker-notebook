@@ -23,7 +23,7 @@ RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--for
 
 # Install OpenModelica components
 #RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
-RUN apt-get install -y omc omlib-modelica-3.2.2
+RUN apt-get install --no-install-recommends -y omc omlib-modelica-3.2.2
 
 # Install rest of base system
 RUN apt-get install -y \
