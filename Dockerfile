@@ -6,7 +6,7 @@
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM phusion/baseimage:0.9.22
+FROM phusion/baseimage:0.11
 
 MAINTAINER Dietmar Winkler <dietmar.winkler@dwe.no>
 
@@ -15,15 +15,15 @@ CMD ["/sbin/my_init"]
 
 ENV DEBIAN_FRONTEND noninteractive
 USER root
+ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE 1
 
 # Make sure apt is up to date
-RUN add-apt-repository 'deb http://build.openmodelica.org/apt xenial nightly'
 RUN curl -s http://build.openmodelica.org/apt/openmodelica.asc | apt-key add -
+RUN add-apt-repository 'deb http://build.openmodelica.org/apt bionic nightly'
 RUN apt-get update --fix-missing && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 
 # Install OpenModelica components
-#RUN apt-get install -y omc omlib-modelica-3.2.2 omniorb python-omniorb omniidl omniidl-python
-RUN apt-get install --no-install-recommends -y omc omlib-modelica-3.2.2
+RUN apt-get install --no-install-recommends -y omc omlib-modelica-3.2.3
 
 # Install rest of base system
 RUN apt-get install -y \
@@ -85,45 +85,13 @@ RUN pip install -U git+git://github.com/OpenModelica/jupyter-openmodelica.git
 RUN pip install version_information
 RUN conda clean -yt
 
-# # Python 2 env
-# RUN conda create -n py2 python=2 ipykernel
-# RUN /bin/bash -c "source activate py2 &&\
-#     ipython kernel install --user &&\
-#     pip install git+git://github.com/OpenModelica/OMPython.git &&\
-#     pip install git+git://github.com/OpenModelica/jupyter-openmodelica.git &&\
-#     pip install version_information &&\
-#     conda install --yes jupyter \
-#                         matplotlib \
-#                         numpy \
-#                         pandas \
-#                         scipy \
-#                         sympy \
-#                         terminado"
-# #     conda clean -yt"
-# # RUN /bin/bash -c "source activate py2 &&\
-# #     mkdir -p $CONDA_DIR/envs/py2/etc/activate.d/ &&\
-# #     echo 'export PYTHONUSERSITE=1' >> $CONDA_DIR/envs/py2/etc/activate.d/globalsitepackage.sh"
-
-# # Python 3 env
-# RUN conda create -n py3 python=3 ipykernel
-# RUN /bin/bash -c "source activate py3 &&\
-#     ipython kernel install --user &&\
-#     pip install version_information &&\
-#     conda install --yes jupyter \
-#                         matplotlib \
-#                         numpy \
-#                         pandas \
-#                         scipy \
-#                         sympy && \
-#     conda clean -yt"
-
 # Workaround for issue with ADD permissions
 USER root
 
 # Let's encrypt setup
-RUN mkdir /etc/letsencrypt
-COPY fullchain.pem /etc/letsencrypt/
-COPY privkey.pem /etc/letsencrypt/
+# RUN mkdir /etc/letsencrypt
+# COPY fullchain.pem /etc/letsencrypt/
+# COPY privkey.pem /etc/letsencrypt/
 # RUN chmod o-r /etc/letsencrypt/*
 
 RUN chown student:student /home/student -R

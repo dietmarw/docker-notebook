@@ -8,18 +8,12 @@ copycerts:
 image: copycerts Dockerfile setup.sh
 	docker build -t dietmarw/notebook .
 
-proxy-image:
-	docker pull jupyter/configurable-http-proxy
+image-local: Dockerfile setup.sh
+	docker build -t dietmarw/notebook .
 
-proxy: proxy-image
-	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
-		--name=proxy jupyter/configurable-http-proxy \
-		--default-target http://127.0.0.1:9999
-tmpnb: image
-	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
-		--name=tmpnb \
-		-v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py \
-		--image=dietmarw/notebook
+# local version no certs on localhost:8888
+local: image-local
+	docker run --net=host -d -e PASSWORD=FOO --name local dietmarw/notebook
 
 single: image
 	docker run --net=host -d -e PASSWORD=$(PASSWORD) --name single dietmarw/notebook
@@ -29,6 +23,20 @@ server: single
 # the IP is for now set for the current droplet
 	sh -c "iptables -t nat -I PREROUTING -p tcp -d 128.39.88.61 --dport 443 -j REDIRECT --to-port 8888"
 	sh -c "iptables -t nat -I OUTPUT -p tcp -o lo --dport 443 -j REDIRECT --to-port 8888"
+
+# These are old setups, no longer used:
+# proxy-image:
+# 	docker pull jupyter/configurable-http-proxy
+
+# proxy: proxy-image
+# 	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
+# 		--name=proxy jupyter/configurable-http-proxy \
+# 		--default-target http://127.0.0.1:9999
+# tmpnb: image
+# 	docker run --net=host -d -e CONFIGPROXY_AUTH_TOKEN=$(TOKEN) \
+# 		--name=tmpnb \
+# 		-v /var/run/docker.sock:/docker.sock jupyter/tmpnb python orchestrate.py \
+# 		--image=dietmarw/notebook
 
 dev: clean proxy notebook
 
